@@ -17,6 +17,7 @@ class game
 private:
 	pos A;
 	int Type;										//結果的繪畫需要用到
+	int Count;										//輸贏判斷
 public:
 	void gotoxy(int x, int y);
 	void color(int a);

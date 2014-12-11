@@ -21,7 +21,8 @@
 #define Down 2
 #define Left 3
 #define Right 4
-#define Lose 8			//懶得改了，誰有興趣可以加一個輸贏機制
+#define Lose 8
+#define Win 99
 #define Me 10
 
 int map[Height][Width];
@@ -191,9 +192,13 @@ int game::gameplay()
 			++A.y;
 		}
 		break;
-	case LMB:
+	case LMB:;
 		if (lmb())
+		{
+			if ((Count - 1) == 0)
+				return Win;
 			return LMB;
+		}
 		else
 			return Lose;
 	case RMB:
@@ -363,6 +368,8 @@ game::game()
 {
 	A.x = 0;
 	A.y = 0;
+	Type = 0;
+	Count = Height * Width - Num;
 }
 
 void Clear()

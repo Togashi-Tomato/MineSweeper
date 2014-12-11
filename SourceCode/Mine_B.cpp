@@ -5,15 +5,15 @@
 #include "Mine.h"										//錯誤提示很煩，所以這裏包涵了頭文件，注意用#ifndef
 #define LMB 5
 #define Lose 8
+#define Win 99
 
 int main()
 {
 	system("Title MineSweeper");
-	game Player;
-	Player.hidden();
 	for (;;)											//此處也是一個比較個人喜歡用的技巧，創建一個無任何參數的for（while不行）然後利用if去控制，新手不建議用
 	{
-		Player.settype(0);
+		game Player;
+		Player.hidden();
 		system("cls");
 		std::string str;
 		std::cout << "開始遊戲？(Y/N)\n";				//注意Y/N千萬不要寫\號，是轉義序列
@@ -24,14 +24,17 @@ int main()
 		else
 			break;
 		Player.erase();
-		while (Player.gameplay() != LMB)
-			continue;
+		int *temp = new int(Player.gameplay());
+		while (*temp != LMB)
+			*temp = Player.gameplay();
 		Player.settype(1);
 		Player.create();
 		Player.display();
-		while (Player.gameplay() != Lose)
-			continue;
-		Player.settype(Lose);
+		*temp = Player.gameplay();
+		while (*temp != Lose && *temp != Win)
+			*temp = Player.gameplay();
+		delete temp;
+		Player.settype(Lose);							//不用在意這些細節
 		system("cls");
 		Player.paint();
 		std::cout << std::endl;
@@ -46,7 +49,6 @@ int main()
 			break;
 	}
 	system("cls");
-	Player.~game();
 	std::cout << "Bye!\n";
 	system("pause");
 	return 0;
