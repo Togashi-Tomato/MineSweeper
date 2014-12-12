@@ -1,7 +1,8 @@
-//此文件是主要運行文件，內含main()
+//此文件是主要運行文件，內含main()，有些C和C++的IO庫混用，懶得改了，別在意
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <conio.h>
 #include "Mine.h"										//錯誤提示很煩，所以這裏包涵了頭文件，注意用#ifndef
 #define LMB 5
 #define Lose 8
@@ -23,22 +24,36 @@ int main()
 			system("cls");
 		else
 			break;
-		Player.erase();
+		Player.create();
 		int *temp = new int(Player.gameplay());
-		while (*temp != LMB)
+		while (*temp != LMB && *temp != Win)
 			*temp = Player.gameplay();
 		Player.settype(1);
 		Player.create();
 		Player.display();
-		*temp = Player.gameplay();
-		while (*temp != Lose && *temp != Win)
-			*temp = Player.gameplay();
-		delete temp;
-		Player.settype(Lose);							//不用在意這些細節
-		system("cls");
 		Player.paint();
-		std::cout << std::endl;
+		if (*temp == LMB)
+		{
+			*temp = Player.gameplay();
+			while (*temp != Lose && *temp != Win)
+				*temp = Player.gameplay();
+		}
+		if (*temp == Lose)
+		{
+			Player.settype(Lose);
+			system("cls");
+			Player.paint();
+		}
+		else if (*temp == Win)
+		{
+			Player.settype(Win);
+			system("cls");
+			Player.paint();
+		}
+		delete temp;
+		Clear();
 		std::cin.get();
+		Clear();
 		system("cls");
 		std::cout << "遊戲結束！再來一遍？(Y/N)\n";
 		str = std::cin.get();

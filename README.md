@@ -1,4 +1,4 @@
-MineSweep
+MineSweeper
 =========.
 
 A small minesweeper.
